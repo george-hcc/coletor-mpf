@@ -29,22 +29,24 @@ e o formato (ods ou xlsx).
 '''
 def downloader(month, year):
     table_format = '.ods'
-    if int(year) < 2018:
-        table_format = '.xlsx'
-    if int(year) == 2019 and month_list.index(month) < 5:
-        table_format = '.xlsx'
+    if year < 2019:
+        table_format = '.xls'
+    if year == 2019 and month < 5:
+        table_format = '.xls'
            
     table_list = []
     for vinculo in vinculo_str_d:
         url = ("http://www.transparencia.mpf.mp.br/conteudo/contracheque/"
                + vinculo + "/"
-               + year + "/"
+               + str(year) + "/"
                + vinculo + "_"
-               + year + "_"
-               + month + table_format)
+               + str(year) + "_"
+               + month_list[month]
+               + table_format)
         filename = (vinculo + '_'
-                    + year + '_'
-                    + month + table_format)
+                    + str(year) + '_'
+                    + month_list[month]
+                    + table_format)
         r = requests.get(url)
         f = open('tmp/' + filename, 'wb')
         f.write(r.content)
