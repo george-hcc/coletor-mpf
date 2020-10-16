@@ -1,6 +1,6 @@
 import pandas as pd
 
-from downloader import downloader
+from downloader import downloader, vinculo_str_d
 
 df_header = ['Matrícula',
              'Nome',
@@ -28,12 +28,12 @@ def cleanser(table_list, table_format):
     excel_engine = {'.ods':'odf','.xlsx':None}
     
     for i,filename in enumerate(table_list):
-        df = pd.read_excel('tmp/'+filename+table_format,
+        df = pd.read_excel('tmp/'+filename,
                            header=None,
                            engine=excel_engine[table_format])
         cleansed_df = individual_cleanser(df)
-        print(i, filename.split('_')[0])
-        df_struct.append((filename.split('_')[0], cleansed_df))
+        df_struct.append((vinculo_str_d[filename.split('_')[0]],
+                          cleansed_df))
 
     return df_struct
 
